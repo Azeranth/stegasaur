@@ -21,8 +21,8 @@ def getStream(_args):
         return stegahttp.WebDataStream(_args.http)
 
 def refillPipe(_fifoPath, _stream, _chunkSize=4096):
+    fifo = open(_fifoPath, 'wb')
     try:
-        fifo = open(_fifoPath, 'wb')
         while True:
             select.select([],[fifo],[])[1]
             try:
@@ -32,6 +32,7 @@ def refillPipe(_fifoPath, _stream, _chunkSize=4096):
                 fifo = open(_fifoPath, 'wb')
     finally:
         try:
+            fifo.close()
             os.remove(_fifoPath)
         except:
             pass
