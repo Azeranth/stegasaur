@@ -1,6 +1,7 @@
 import random
 import re
 import requests
+import sys
 from urllib.parse import urljoin
 
 class WebDataStream:
@@ -28,7 +29,7 @@ class WebDataStream:
         # Randomly choose a source and mark it as used
         self.currentSource = random.choice(unusedSources)
         self.sources = [(source, used) if source != self.currentSource else (source, True) for source, used in self.sources]
-
+        print(f"Current Source: {self.currentSource}")
         try:
             response = requests.get(self.currentSource)
             content = response.content
@@ -50,9 +51,8 @@ class WebDataStream:
 
             # Populate the buffer with the new content
             self.buffer += content
-
         except requests.exceptions.RequestException:
-            # Handle errors during data fetch
+            print(f"Error in Request for resource '{self.currentSource}'")
             pass
 
     def _extractResources(self, _content):

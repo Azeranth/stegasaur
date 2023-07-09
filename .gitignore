@@ -1,0 +1,7 @@
+# Ignore all files
+*
+
+# Excpet
+!.gitignore
+!*.md
+!stega*.py
